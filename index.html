@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Advanced real-time Fake News Detection platform using client-side NLP, stylometric analysis, and social engagement anomaly detection.">
+    <meta name="keywords" content="Fake News, Credibility Analyzer, NLP, Machine Learning, Sentiment Analysis, Reading Index, Fake News Detection">
+    <title>VERITAS // Advanced AI Fake News & Credibility Detection</title>
+    <!-- Google Fonts: Outfit (modern, geometric) & Inter (highly readable body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-logo">
+                    <svg viewBox="0 0 24 24" class="logo-icon">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="url(#logoGrad)"/>
+                        <defs>
+                            <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#a855f7" />
+                                <stop offset="100%" stop-color="#3b82f6" />
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+                <div class="brand-text">
+                    <h2>VERITAS</h2>
+                    <span>AI CREDIBILITY ANALYST</span>
+                </div>
+            </div>
+            
+            <nav class="nav-menu">
+                <button class="nav-item active" id="nav-detector" onclick="switchTab('tab-detector-section')">
+                    <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                    </svg>
+                    <span>Detector Hub</span>
+                </button>
+                <button class="nav-item" id="nav-scorecard" onclick="switchTab('tab-scorecard-section')">
+                    <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                    </svg>
+                    <span>Analytical Scorecard</span>
+                </button>
+                <button class="nav-item" id="nav-sandbox" onclick="switchTab('tab-sandbox-section')">
+                    <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/>
+                    </svg>
+                    <span>Simulation & Transparency</span>
+                </button>
+            </nav>
+
+            <div class="sidebar-examples">
+                <h3 class="sidebar-section-title">QUICK TEMPLATES</h3>
+                <div class="example-buttons">
+                    <button class="example-btn" onclick="loadExample('ap')">
+                        <span class="status-dot dot-credible"></span>
+                        <span>Verified Press (AP)</span>
+                    </button>
+                    <button class="example-btn" onclick="loadExample('conspiracy')">
+                        <span class="status-dot dot-fake"></span>
+                        <span>Conspiracy Theory</span>
+                    </button>
+                    <button class="example-btn" onclick="loadExample('satire')">
+                        <span class="status-dot dot-satire"></span>
+                        <span>Satirical Post (Onion)</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="sidebar-footer">
+                <span class="version">VERITAS Engine v1.0.0</span>
+                <span class="attribution">Pure Client-Side Inference</span>
+            </div>
+        </aside>
+
+        <!-- Main Dashboard Canvas -->
+        <main class="dashboard-canvas">
+            <!-- Header Banner -->
+            <header class="dashboard-header">
+                <div class="header-main">
+                    <h1 class="header-title">Fake News Detection Engine</h1>
+                    <p class="header-subtitle">Real-time NLP credibility grading, stylometric profiling, and social engagement auditing.</p>
+                </div>
+                <div class="live-status">
+                    <span class="status-indicator"></span>
+                    <span class="status-text">LOCAL SCANNER ACTIVE</span>
+                </div>
+            </header>
+
+            <!-- TAB 1: DETECTOR HUB -->
+            <section id="tab-detector-section" class="tab-content active">
+                <div class="grid-double">
+                    <!-- Left: Input Console -->
+                    <div class="dashboard-card card-input">
+                        <div class="card-header">
+                            <div class="card-header-icon">
+                                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                                </svg>
+                            </div>
+                            <h3>Article Analysis Center</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="input-title">ARTICLE TITLE</label>
+                                <input type="text" id="input-title" placeholder="Enter headline or article title..." autocomplete="off">
+                            </div>
+                            <div class="form-group">
+                                <label for="input-text">ARTICLE CONTENT</label>
+                                <textarea id="input-text" placeholder="Paste full article text here (at least 30 words recommended)..."></textarea>
+                            </div>
+                            
+                            <div class="form-row-double">
+                                <div class="form-group">
+                                    <label for="input-domain">SOURCE DOMAIN</label>
+                                    <input type="text" id="input-domain" placeholder="e.g. reuters.com or blogspot.com" autocomplete="off">
+                                </div>
+                                <div class="form-group flex-end">
+                                    <button class="primary-btn" id="analyze-btn" onclick="runAnalysis()">
+                                        <span>ANALYZE CONTENT</span>
+                                        <svg class="btn-arrow" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="engagement-sliders">
+                                <h4 class="sliders-title">SOCIAL ENGAGEMENT METRICS (FOR BOT SCAN)</h4>
+                                <div class="sliders-grid">
+                                    <div class="slider-group">
+                                        <div class="slider-header">
+                                            <span>VIEWS</span>
+                                            <span class="slider-value" id="val-views">1,500</span>
+                                        </div>
+                                        <input type="range" id="slide-views" min="100" max="100000" step="100" value="1500" oninput="updateSliderVal('views')">
+                                    </div>
+                                    <div class="slider-group">
+                                        <div class="slider-header">
+                                            <span>SHARES</span>
+                                            <span class="slider-value" id="val-shares">350</span>
+                                        </div>
+                                        <input type="range" id="slide-shares" min="0" max="50000" step="50" value="350" oninput="updateSliderVal('shares')">
+                                    </div>
+                                    <div class="slider-group">
+                                        <div class="slider-header">
+                                            <span>COMMENTS</span>
+                                            <span class="slider-value" id="val-comments">120</span>
+                                        </div>
+                                        <input type="range" id="slide-comments" min="0" max="10000" step="10" value="120" oninput="updateSliderVal('comments')">
+                                    </div>
+                                    <div class="slider-group">
+                                        <div class="slider-header">
+                                            <span>REACTIONS</span>
+                                            <span class="slider-value" id="val-likes">840</span>
+                                        </div>
+                                        <input type="range" id="slide-likes" min="0" max="25000" step="50" value="840" oninput="updateSliderVal('likes')">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Quick Report Panel -->
+                    <div class="dashboard-card card-quick-report">
+                        <div class="card-header">
+                            <div class="card-header-icon">
+                                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+                                </svg>
+                            </div>
+                            <h3>Credibility Assessment</h3>
+                        </div>
+                        <div class="card-body centered-content">
+                            <!-- Circular Progress Gauge -->
+                            <div class="gauge-wrapper">
+                                <svg viewBox="0 0 120 120" class="circular-gauge">
+                                    <circle class="gauge-bg" cx="60" cy="60" r="50" />
+                                    <circle class="gauge-fill" id="gauge-fill-elem" cx="60" cy="60" r="50" stroke-dasharray="314.16" stroke-dashoffset="314.16" />
+                                </svg>
+                                <div class="gauge-center">
+                                    <span class="gauge-pct" id="credibility-score-val">--</span>
+                                    <span class="gauge-label">TRUST INDEX</span>
+                                </div>
+                            </div>
+
+                            <!-- Classification Badge -->
+                            <div class="badge-container">
+                                <div class="verdict-badge bg-neutral" id="verdict-badge-elem">
+                                    <span id="verdict-label">Awaiting Input</span>
+                                </div>
+                                <div class="verdict-summary" id="verdict-summary-desc">
+                                    Enter text and click "Analyze Content" to start the local evaluation.
+                                </div>
+                            </div>
+
+                            <!-- Highlighted Text View -->
+                            <div class="highlighted-text-panel">
+                                <div class="panel-header">
+                                    <span>REAL-TIME TEXT MARKER MAP</span>
+                                    <div class="hl-legend">
+                                        <span class="legend-item bg-cb"><span class="legend-dot dot-cb"></span>Clickbait</span>
+                                        <span class="legend-item bg-sub"><span class="legend-dot dot-sub"></span>Bias / Emotive</span>
+                                        <span class="legend-item bg-caps"><span class="legend-dot dot-caps"></span>ALL-CAPS</span>
+                                    </div>
+                                </div>
+                                <div class="panel-content" id="highlighted-content-view">
+                                    <p class="placeholder-text">Run the analysis to generate the highlighted interactive mapping of textual markers, sensational phrasing, and lexical elements.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 2: ANALYTICAL SCORECARD -->
+            <section id="tab-scorecard-section" class="tab-content">
+                <!-- Scorecard Widgets Grid -->
+                <div class="grid-quad">
+                    <!-- Stat Card 1: Sensationalism -->
+                    <div class="dashboard-card stat-card">
+                        <div class="stat-header">
+                            <span class="stat-title">SENSATIONALISM INDEX</span>
+                            <div class="stat-icon icon-purple">
+                                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="stat-content">
+                            <span class="stat-value" id="val-sensationalism">--</span>
+                            <div class="stat-bar-container">
+                                <div class="stat-bar bg-purple" id="bar-sensationalism" style="width: 0%"></div>
+                            </div>
+                            <span class="stat-meta" id="desc-sensationalism">Detecting punctuation flags, all-caps emphasis, and emotional tags.</span>
+                        </div>
+                    </div>
+
+                    <!-- Stat Card 2: Readability -->
+                    <div class="dashboard-card stat-card">
+                        <div class="stat-header">
+                            <span class="stat-title">FLESCH READABILITY</span>
+                            <div class="stat-icon icon-cyan">
+                                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="stat-content">
+                            <span class="stat-value" id="val-readability">--</span>
+                            <div class="stat-bar-container">
+                                <div class="stat-bar bg-cyan" id="bar-readability" style="width: 0%"></div>
+                            </div>
+                            <span class="stat-meta" id="desc-readability">Calculated based on syllable density and sentence structure complexity.</span>
+                        </div>
+                    </div>
+
+                    <!-- Stat Card 3: Domain Reputation -->
+                    <div class="dashboard-card stat-card">
+                        <div class="stat-header">
+                            <span class="stat-title">SOURCE TRUST VECTOR</span>
+                            <div class="stat-icon icon-green">
+                                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="stat-content">
+                            <span class="stat-value" id="val-domain">--</span>
+                            <div class="stat-bar-container">
+                                <div class="stat-bar bg-green" id="bar-domain" style="width: 0%"></div>
+                            </div>
+                            <span class="stat-meta" id="desc-domain">Cross-referencing domain metadata with our global reputation lookup table.</span>
+                        </div>
+                    </div>
+
+                    <!-- Stat Card 4: Viral Anomaly -->
+                    <div class="dashboard-card stat-card">
+                        <div class="stat-header">
+                            <span class="stat-title">VIRAL ANOMALY ZONE</span>
+                            <div class="stat-icon icon-yellow">
+                                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="stat-content">
+                            <span class="stat-value" id="val-anomaly">--</span>
+                            <div class="stat-bar-container">
+                                <div class="stat-bar bg-yellow" id="bar-anomaly" style="width: 0%"></div>
+                            </div>
+                            <span class="stat-meta" id="desc-anomaly">Auditing social sharing acceleration ratios versus discussion depth.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid-double gap-margin">
+                    <!-- Left: Word Contributions Bar Chart -->
+                    <div class="dashboard-card card-chart">
+                        <div class="card-header">
+                            <div class="card-header-icon">
+                                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                                </svg>
+                            </div>
+                            <h3>Textual Feature Influence Vectors</h3>
+                        </div>
+                        <div class="card-body">
+                            <p class="chart-desc">Relative influence of individual matched vocabulary terms on the final prediction model. Neon red bars pull the model toward 'Fake', neon green bars pull toward 'Credible'.</p>
+                            <div class="bar-chart-container" id="bar-chart-content">
+                                <div class="no-data-msg">Please run analysis first to extract weight values.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Engagement Bot Mapping Area -->
+                    <div class="dashboard-card card-bot-map">
+                        <div class="card-header">
+                            <div class="card-header-icon">
+                                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                                </svg>
+                            </div>
+                            <h3>Social Propagation Graph</h3>
+                        </div>
+                        <div class="card-body centered-content">
+                            <!-- custom SVG bot chart representation -->
+                            <div class="graph-wrapper">
+                                <svg viewBox="0 0 200 200" class="bot-chart-svg">
+                                    <!-- Axes -->
+                                    <line x1="20" y1="180" x2="190" y2="180" stroke="rgba(255, 255, 255, 0.2)" stroke-width="1.5"/>
+                                    <line x1="20" y1="10" x2="20" y2="180" stroke="rgba(255, 255, 255, 0.2)" stroke-width="1.5"/>
+                                    
+                                    <!-- Regions -->
+                                    <rect x="20" y="100" width="80" height="80" fill="rgba(16, 185, 129, 0.05)" stroke="rgba(16, 185, 129, 0.15)" stroke-dasharray="3,3"/>
+                                    <rect x="100" y="80" width="90" height="100" fill="rgba(234, 179, 8, 0.05)" stroke="rgba(234, 179, 8, 0.15)" stroke-dasharray="3,3"/>
+                                    <rect x="20" y="10" width="170" height="70" fill="rgba(239, 68, 68, 0.05)" stroke="rgba(239, 68, 68, 0.15)" stroke-dasharray="3,3"/>
+                                    
+                                    <!-- Region Labels -->
+                                    <text x="30" y="160" fill="rgba(16, 185, 129, 0.4)" font-size="8" font-family="Outfit">ORGANIC</text>
+                                    <text x="110" y="160" fill="rgba(234, 179, 8, 0.4)" font-size="8" font-family="Outfit">VIRAL ECHO</text>
+                                    <text x="30" y="30" fill="rgba(239, 68, 68, 0.4)" font-size="8" font-family="Outfit">BOT PROPAGATION / ANOMALOUS</text>
+                                    
+                                    <!-- Dynamic Coordinate Dot -->
+                                    <circle id="bot-dot" cx="20" cy="180" r="6" fill="#a855f7" stroke="#ffffff" stroke-width="1.5" class="pulsing-dot"/>
+                                    
+                                    <!-- Labels -->
+                                    <text x="105" y="195" fill="rgba(255,255,255,0.4)" font-size="7" text-anchor="middle">Amplification Rate</text>
+                                    <text x="8" y="95" fill="rgba(255,255,255,0.4)" font-size="7" text-anchor="middle" transform="rotate(-90 8 95)">Blind Share Ratio</text>
+                                </svg>
+                            </div>
+                            
+                            <div class="bot-metrics-readout">
+                                <div class="readout-item">
+                                    <span class="readout-label">Blind Share Index (BSI)</span>
+                                    <span class="readout-val" id="readout-bsi">--</span>
+                                </div>
+                                <div class="readout-item">
+                                    <span class="readout-label">Amplification Factor</span>
+                                    <span class="readout-val" id="readout-amp">--</span>
+                                </div>
+                            </div>
+                            <p class="graph-caption">This chart maps social engagement variables. Standard discussion resides in the lower-left, viral spread reaches bottom-right, while hyper-shares with negligible views trigger bot farm anomaly alerts.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 3: SIMULATION & TRANSPARENCY -->
+            <section id="tab-sandbox-section" class="tab-content">
+                <div class="grid-double">
+                    <!-- Left: Control Panel -->
+                    <div class="dashboard-card card-control-sandbox">
+                        <div class="card-header">
+                            <div class="card-header-icon">
+                                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/>
+                                </svg>
+                            </div>
+                            <h3>Mathematical Sandbox Controls</h3>
+                        </div>
+                        <div class="card-body">
+                            <p class="sandbox-desc">Directly manipulate the core mathematical weights and indicator thresholds to see exactly how the linear decision boundaries behave along the Sigmoid Activation Curve.</p>
+                            
+                            <div class="sandbox-controls-grid">
+                                <div class="slider-group">
+                                    <div class="slider-header">
+                                        <span>Clickbait & Vocabulary Weight</span>
+                                        <span class="slider-value" id="val-sb-vocab">50%</span>
+                                    </div>
+                                    <input type="range" id="sb-vocab" min="0" max="100" value="50" oninput="runSandboxUpdate()">
+                                </div>
+
+                                <div class="slider-group">
+                                    <div class="slider-header">
+                                        <span>Subjectivity/Emotive Bias</span>
+                                        <span class="slider-value" id="val-sb-bias">30%</span>
+                                    </div>
+                                    <input type="range" id="sb-bias" min="0" max="100" value="30" oninput="runSandboxUpdate()">
+                                </div>
+
+                                <div class="slider-group">
+                                    <div class="slider-header">
+                                        <span>Exclamation / Caps Intensity</span>
+                                        <span class="slider-value" id="val-sb-stylometry">10%</span>
+                                    </div>
+                                    <input type="range" id="sb-stylometry" min="0" max="100" value="10" oninput="runSandboxUpdate()">
+                                </div>
+
+                                <div class="slider-group">
+                                    <div class="slider-header">
+                                        <span>Source URL Trust Level</span>
+                                        <span class="slider-value" id="val-sb-source">80%</span>
+                                    </div>
+                                    <input type="range" id="sb-source" min="0" max="100" value="80" oninput="runSandboxUpdate()">
+                                </div>
+
+                                <div class="slider-group">
+                                    <div class="slider-header">
+                                        <span>Viral Anomaly Penalty</span>
+                                        <span class="slider-value" id="val-sb-anomaly">0%</span>
+                                    </div>
+                                    <input type="range" id="sb-anomaly" min="0" max="100" value="0" oninput="runSandboxUpdate()">
+                                </div>
+                            </div>
+
+                            <div class="equation-readout">
+                                <h4>SIGMOID INTERMEDIATE LOGIT EXPLAINER</h4>
+                                <div class="formula-box">
+                                    <code>z = (Vocab × w₁) + (Bias × w₂) + (Stylometry × w₃) - (Source × w₄) + (Anomaly × w₅)</code>
+                                    <code>P(Fake) = 1 / (1 + e^-z)</code>
+                                </div>
+                                <div class="logit-box">
+                                    <span>Cumulative Logit (z): </span><strong id="sandbox-logit">--</strong>
+                                    <span style="margin-left: 20px;">Calculated P(Fake): </span><strong id="sandbox-prob">--</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Sigmoid visualization -->
+                    <div class="dashboard-card card-sigmoid">
+                        <div class="card-header">
+                            <div class="card-header-icon">
+                                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                                </svg>
+                            </div>
+                            <h3>Logistic Classification Curve</h3>
+                        </div>
+                        <div class="card-body centered-content">
+                            <!-- Draw the full Sigmoid curve SVG dynamically -->
+                            <div class="sigmoid-wrapper">
+                                <svg viewBox="0 0 300 200" class="sigmoid-chart-svg" id="sigmoid-svg">
+                                    <!-- Grid lines -->
+                                    <line x1="30" y1="10" x2="270" y2="10" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+                                    <line x1="30" y1="100" x2="270" y2="100" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+                                    <line x1="30" y1="190" x2="270" y2="190" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+                                    <line x1="150" y1="10" x2="150" y2="190" stroke="rgba(255,255,255,0.08)" stroke-dasharray="3,3"/>
+                                    
+                                    <!-- Axes Labels -->
+                                    <text x="280" y="195" fill="rgba(255,255,255,0.3)" font-size="7" text-anchor="end">Log-odds (z)</text>
+                                    <text x="25" y="15" fill="rgba(255,255,255,0.3)" font-size="7" text-anchor="end">1.0 (Fake)</text>
+                                    <text x="25" y="103" fill="rgba(255,255,255,0.3)" font-size="7" text-anchor="end">0.5</text>
+                                    <text x="25" y="188" fill="rgba(255,255,255,0.3)" font-size="7" text-anchor="end">0.0 (Real)</text>
+
+                                    <!-- Sigmoid Curve Path -->
+                                    <!-- Drawn programmatically, but let's draw standard SVG path as baseline -->
+                                    <path id="sigmoid-curve-path" d="M 30,190 C 80,190 120,185 140,120 C 150,80 170,10 270,10" fill="none" stroke="rgba(59, 130, 246, 0.4)" stroke-width="2.5"/>
+                                    
+                                    <!-- Current coordinate dot -->
+                                    <circle id="sigmoid-dot" cx="150" cy="100" r="7" fill="#00ffcc" stroke="#ffffff" stroke-width="2" class="pulsing-dot"/>
+                                </svg>
+                            </div>
+                            <div class="transparency-note">
+                                <p><strong>Model Education Node:</strong> Machine learning algorithms use the Sigmoid activation function to squash linear feature scores ($z$) down into standard probability limits $[0, 1]$. An article scoring below $0.5$ classifies as <strong>Credible</strong>, while values above $0.5$ tip the balance towards <strong>Suspicious / Fake</strong>.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sticky footer -->
+            <footer class="app-footer">
+                <p>&copy; 2026 VERITAS Credibility Intelligence Platform. Designed with complete client-side processing security.</p>
+            </footer>
+        </main>
+    </div>
+
+    <!-- JS Core Engine -->
+    <script src="app.js"></script>
+</body>
+</html>
